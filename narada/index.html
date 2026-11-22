@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Narada — Toggle Minds</title>
+<meta name="description" content="Narada: one explorer for files, networks, phones and drives. Free and open source, for Windows, macOS, Linux and Raspberry Pi.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+  :root {
+    --bg: #f6f7f9; --card: #ffffff; --ink: #151821; --muted: #5a6172; --line: #e2e5eb;
+    --accent: #0f7b6c; --accent-ink: #ffffff;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0f1116; --card: #171a22; --ink: #e8eaf0; --muted: #9aa1b2; --line: #272b36;
+      --accent: #4fd1b8; --accent-ink: #0b0d12; color-scheme: dark; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif; }
+  .wrap { max-width: 880px; margin: 0 auto; padding-inline: 20px; }
+  header { padding-block: 22px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 750; font-size: 20px; letter-spacing: -0.01em; color: var(--ink); text-decoration: none; }
+  .mono { width: 34px; height: 34px; border-radius: 9px; background: var(--accent); color: var(--bg); display: grid; place-items: center; font-weight: 800; font-size: 15px; }
+  nav a { color: var(--muted); text-decoration: none; margin-left: 16px; font-size: 15px; }
+  nav a:hover { color: var(--ink); }
+  .hero { padding-block: 30px 10px; display: grid; grid-template-columns: 76px 1fr; gap: 20px; align-items: center; }
+  .hero img { width: 76px; height: 76px; border-radius: 18px; }
+  .hero h1 { font-size: clamp(30px, 5vw, 44px); line-height: 1.08; letter-spacing: -0.03em; margin: 0 0 6px; }
+  .hero p { color: var(--muted); margin: 0; font-size: 18px; }
+  section { padding-block: 22px; }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin: 0 0 14px; font-weight: 700; }
+  .dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; }
+  .os { border: 1px solid var(--line); border-radius: 16px; padding: 18px; background: var(--card); display: flex; flex-direction: column; gap: 9px; min-width: 0; }
+  .os h3 { margin: 0; font-size: 18px; }
+  .os .sub { color: var(--muted); font-size: 13px; font-weight: 400; }
+  .btn { display: block; text-align: center; padding: 10px 12px; border-radius: 10px; background: var(--accent); color: var(--accent-ink); font-weight: 650; text-decoration: none; font-size: 14px; }
+  .btn.ghost { background: transparent; color: var(--accent); border: 1px solid var(--line); font-weight: 500; }
+  .btn:hover { filter: brightness(1.07); }
+  .note { color: var(--muted); font-size: 14px; max-width: 64ch; }
+  .note code { background: var(--line); padding: 1px 6px; border-radius: 5px; font-size: .9em; }
+  .status { color: var(--muted); font-size: 14px; }
+  .ver { font-weight: 700; color: var(--ink); }
+  .feat { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px 24px; }
+  .feat div { min-width: 0; }
+  .feat b { display: block; }
+  .feat p { margin: 2px 0 0; color: var(--muted); font-size: 14px; }
+  footer { padding-block: 30px 44px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); margin-top: 16px;
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; }
+  footer a { color: var(--muted); }
+  @media (max-width: 600px) { .hero { grid-template-columns: 1fr; } .hero img { width: 60px; height: 60px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="brand" href="/"><span class="mono" aria-hidden="true">TM</span><span>Toggle Minds</span></a>
+    <nav><a href="/#projects">Projects</a><a href="https://github.com/ShankarOnline/navsuite" target="_blank" rel="noopener">Source</a></nav>
+  </header>
+
+  <div class="hero">
+    <img src="/narada-logo.svg" alt="">
+    <div>
+      <h1>Narada</h1>
+      <p>One explorer for your files, network, phones and drives — the same on Windows, macOS, Linux and Raspberry&nbsp;Pi.</p>
+    </div>
+  </div>
+
+  <section>
+    <h2>Download <span id="ver" class="status"></span></h2>
+    <div class="dl" id="downloads"><p class="status" id="dlstatus">Loading the latest release from GitHub…</p></div>
+    <p class="note" id="warn" style="margin-top:14px" hidden>These builds aren't code-signed yet, so you'll click past a warning. <b>Windows:</b> More info → Run anyway. <b>macOS:</b> right-click the app → Open, or run <code>xattr -dr com.apple.quarantine /Applications/Narada.app</code>.</p>
+  </section>
+
+  <section>
+    <h2>What it does</h2>
+    <div class="feat">
+      <div><b>One record per system</b><p>Every device on your network and tailnet, found through every channel it offers.</p></div>
+      <div><b>Verified transfers</b><p>Copy preview, pause/resume, and a SHA-256 check on every file.</p></div>
+      <div><b>Phone drop</b><p>AirDrop-style sharing to any phone by scanning a QR code — no app to install.</p></div>
+      <div><b>Drives &amp; dual boot</b><p>Another operating system's disks, read safely and read-only.</p></div>
+      <div><b>Play media</b><p>Video and music stream from anywhere, with tags and cover art.</p></div>
+      <div><b>Built-in terminal &amp; probes</b><p>Your shell, plus ping, traceroute, DNS and more — no admin rights.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <span>&copy; <span id="yr">2026</span> Toggle Minds &middot; a family hobby, free for everyone</span>
+    <span><a href="https://github.com/ShankarOnline/navsuite" target="_blank" rel="noopener">Source &amp; releases</a> &middot; <a href="/">Toggle&nbsp;Minds</a></span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  var REPO = 'ShankarOnline/navsuite';
+  // match a release asset to a platform + a human label
+  function classify(name) {
+    var n = name.toLowerCase();
+    if (/\.exe$/.test(n)) return ['win', 'Installer (.exe)', true];
+    if (/\.msi$/.test(n)) return ['win', '.msi package', false];
+    if (/\.dmg$/.test(n)) return ['mac', 'Disk image (.dmg)', true];
+    if (/(aarch64|arm64)\.appimage$/.test(n)) return ['pi', '.AppImage', true];
+    if (/(aarch64|arm64)\.deb$/.test(n)) return ['pi', '.deb', false];
+    if (/(aarch64|arm64).*\.rpm$/.test(n)) return ['pi', '.rpm', false];
+    if (/\.appimage$/.test(n)) return ['linux', '.AppImage', true];
+    if (/amd64\.deb$|_x64.*\.deb$/.test(n)) return ['linux', '.deb', false];
+    if (/x86_64.*\.rpm$/.test(n)) return ['linux', '.rpm', false];
+    return [null, null, false];
+  }
+  var OSES = [
+    { key: 'win', title: 'Windows', sub: '' },
+    { key: 'mac', title: 'macOS', sub: 'Intel & Apple Silicon' },
+    { key: 'linux', title: 'Linux', sub: 'x86-64' },
+    { key: 'pi', title: 'Raspberry Pi', sub: '64-bit · ARM64' }
+  ];
+  function el(tag, attrs, text) {
+    var e = document.createElement(tag);
+    if (attrs) for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  fetch('https://api.github.com/repos/' + REPO + '/releases/latest', { headers: { 'Accept': 'application/vnd.github+json' } })
+    .then(function (r) { if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
+    .then(function (rel) {
+      var buckets = { win: [], mac: [], linux: [], pi: [] };
+      (rel.assets || []).forEach(function (a) {
+        var c = classify(a.name);
+        if (c[0]) buckets[c[0]].push({ url: a.browser_download_url, label: c[1], primary: c[2] });
+      });
+      var host = document.getElementById('downloads');
+      host.innerHTML = '';
+      document.getElementById('ver').textContent = rel.tag_name ? '· ' + rel.tag_name : '';
+      var any = false;
+      OSES.forEach(function (os) {
+        var items = buckets[os.key].sort(function (a, b) { return (b.primary ? 1 : 0) - (a.primary ? 1 : 0); });
+        if (!items.length) return;
+        any = true;
+        var card = el('div', { class: 'os' });
+        var h = el('h3'); h.appendChild(document.createTextNode(os.title + ' '));
+        if (os.sub) h.appendChild(el('span', { class: 'sub' }, os.sub));
+        card.appendChild(h);
+        items.forEach(function (it) {
+          card.appendChild(el('a', { class: 'btn' + (it.primary ? '' : ' ghost'), href: it.url }, it.label));
+        });
+        host.appendChild(card);
+      });
+      document.getElementById('warn').hidden = false;
+      if (!any) throw new Error('no installers in the latest release');
+    })
+    .catch(function (e) {
+      var host = document.getElementById('downloads');
+      host.innerHTML = '';
+      var p = el('p', { class: 'status' });
+      p.appendChild(document.createTextNode('Couldn’t load the release list. '));
+      p.appendChild(el('a', { class: 'btn ghost', href: 'https://github.com/' + REPO + '/releases/latest', target: '_blank', rel: 'noopener', style: 'display:inline-block;margin-top:8px' }, 'Open the releases page'));
+      host.appendChild(p);
+    });
+})();
+</script>
+</body>
+</html>
