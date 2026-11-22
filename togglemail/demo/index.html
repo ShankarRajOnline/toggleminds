@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ToggleMail demo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <aside id="sidebar">
+      <div class="side-top">
+        <button id="nav-toggle" class="icon side-btn" title="Collapse or expand the navigation">
+          <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <span class="brand"><img src="logo.svg" alt="" width="22" height="22"><span class="txt">ToggleMail</span></span>
+      </div>
+      <button id="compose-btn" class="primary" disabled title="New mail (N)">
+        <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+        <span class="txt">New mail</span>
+      </button>
+      <nav id="accounts"></nav>
+      <button id="add-account-btn" class="ghost" title="Add account">
+        <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0"/><path d="M19 8v6M16 11h6"/></svg>
+        <span class="txt">Add account</span>
+      </button>
+      <span class="grow"></span>
+      <button id="settings-btn" class="ghost side-link" title="Settings">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>
+        <span class="txt">Settings</span>
+      </button>
+    </aside>
+
+    <section id="list-pane">
+      <header class="pane-head">
+        <input id="search" type="search" placeholder="Search this folder" autocomplete="off">
+        <button id="refresh-btn" class="icon" title="Refresh (F5)">⟳</button>
+        <div class="view-wrap">
+          <button id="view-btn" class="icon" title="View options">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16M15 4v16"/></svg>
+          </button>
+          <div id="view-menu" class="menu" hidden>
+            <div class="menu-title">Reading pane</div>
+            <label><input type="radio" name="pane" value="right"> Right (3 columns)</label>
+            <label><input type="radio" name="pane" value="bottom"> Bottom</label>
+            <label><input type="radio" name="pane" value="off"> Off (2 columns)</label>
+            <div class="menu-title">Navigation</div>
+            <label><input type="radio" name="nav" value="full"> Full</label>
+            <label><input type="radio" name="nav" value="icons"> Icons only</label>
+            <div class="menu-title">Colours</div>
+            <label><input type="radio" name="tint" value="color"> Coloured columns</label>
+            <label><input type="radio" name="tint" value="plain"> Plain</label>
+          </div>
+        </div>
+      </header>
+      <div id="list-title"></div>
+      <ul id="messages"></ul>
+      <button id="more-btn" class="ghost" hidden>Load older messages</button>
+    </section>
+
+    <main id="reader">
+      <div id="reader-empty" class="empty">
+        <h2>ToggleMail</h2>
+        <p>Add an account to get started. Works with shankars.org, jaiaditya.org, knkoa.org,
+          toggleminds.com, phonemail.net, Gmail, Outlook and any IMAP mail service.</p>
+      </div>
+      <article id="reader-msg" hidden>
+        <div class="toolbar">
+          <button id="back-btn" title="Back to the list (Esc)">← Back</button>
+          <button data-act="reply">↩ Reply</button>
+          <button data-act="replyall">↩↩ Reply all</button>
+          <button data-act="forward">↪ Forward</button>
+          <span class="sep"></span>
+          <button data-act="archive" title="Archive">Archive</button>
+          <button data-act="junk" title="Move to Junk">Junk</button>
+          <button data-act="delete" title="Delete (Del)">Delete</button>
+          <button data-act="unread">Mark unread</button>
+          <button data-act="flag">☆ Flag</button>
+          <button data-act="snooze" title="Hide until a later time">⏰ Snooze</button>
+          <button data-act="unsnooze" title="Back to the inbox now">Unsnooze</button>
+          <button data-act="sendnow" class="primary" title="Send this scheduled email now">Send now</button>
+          <button data-act="unschedule" title="Don't send; move to Drafts">Cancel sending</button>
+          <select id="move-to" title="Move to folder"><option value="">Move to…</option></select>
+        </div>
+        <h1 id="r-subject"></h1>
+        <div class="meta">
+          <div><strong id="r-from"></strong> <span id="r-from-email" class="muted"></span></div>
+          <div class="muted" id="r-to"></div>
+          <div class="muted" id="r-date"></div>
+        </div>
+        <div id="remote-banner" class="banner" hidden>
+          Pictures from the internet are blocked to protect your privacy.
+          <button id="show-images">Show pictures</button>
+        </div>
+        <ul id="r-attachments"></ul>
+        <iframe id="r-body" sandbox="allow-same-origin" title="Message"></iframe>
+      </article>
+    </main>
+  </div>
+
+  <!-- Account form -->
+  <dialog id="account-dlg">
+    <form id="account-form" method="dialog">
+      <h2 id="account-title">Add account</h2>
+      <label>Your name <input name="name" placeholder="Shankar Raj"></label>
+      <label>Email address <input name="email" type="email" required placeholder="you@shankars.org"></label>
+      <div class="row">
+        <label class="grow">Mail provider <select name="provider"><option value="">Automatic (from the address)</option></select></label>
+        <label class="port">Incoming
+          <select name="protocol"><option value="imap">IMAP</option><option value="pop3">POP3</option></select>
+        </label>
+      </div>
+      <label>Password <input name="password" type="password" autocomplete="off"></label>
+      <p id="provider-note" class="note"></p>
+      <button type="button" id="app-password-btn" hidden>Get an app password</button>
+      <details id="advanced">
+        <summary>Server settings</summary>
+        <label>User name <input name="username" placeholder="usually the full email address"></label>
+        <div class="row">
+          <label><span id="incoming-label">IMAP server</span> <input name="imap_host" required></label>
+          <label class="port">Port <input name="imap_port" type="number" value="993" required></label>
+          <label class="port">Security
+            <select name="incoming_security"><option value="tls">SSL/TLS</option><option value="starttls">STARTTLS</option></select>
+          </label>
+        </div>
+        <div class="row">
+          <label>SMTP server <input name="smtp_host" required></label>
+          <label class="port">Port <input name="smtp_port" type="number" value="587" required></label>
+          <label class="port">Security
+            <select name="smtp_security"><option value="starttls">STARTTLS</option><option value="tls">SSL/TLS</option></select>
+          </label>
+        </div>
+        <label class="check"><input name="accept_invalid_certs" type="checkbox">
+          Accept the server's own certificate (only for a bridge on this computer, such as Proton Mail Bridge)</label>
+        <label>Signature (HTML allowed) <textarea name="signature" rows="3"></textarea></label>
+      </details>
+      <p id="account-error" class="error"></p>
+      <div class="actions">
+        <button type="button" id="account-remove" class="danger" hidden>Remove account</button>
+        <span class="grow"></span>
+        <button type="button" id="account-cancel">Cancel</button>
+        <button type="submit" class="primary" id="account-save">Sign in</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Compose -->
+  <dialog id="compose-dlg">
+    <form id="compose-form" method="dialog">
+      <div class="row">
+        <label class="grow">From <select name="account"></select></label>
+      </div>
+      <label>To <input name="to" placeholder="name@example.com, another@example.com"></label>
+      <div class="row">
+        <label class="grow">Cc <input name="cc"></label>
+        <label class="grow">Bcc <input name="bcc"></label>
+      </div>
+      <label>Subject <input name="subject"></label>
+      <div class="editor-bar">
+        <button type="button" data-cmd="bold"><b>B</b></button>
+        <button type="button" data-cmd="italic"><i>I</i></button>
+        <button type="button" data-cmd="underline"><u>U</u></button>
+        <button type="button" data-cmd="insertUnorderedList">• List</button>
+        <button type="button" data-cmd="insertOrderedList">1. List</button>
+        <button type="button" data-cmd="createLink">Link</button>
+        <button type="button" data-cmd="removeFormat">Clear</button>
+        <span class="grow"></span>
+        <label class="attach">📎 Attach<input id="attach-input" type="file" multiple hidden></label>
+      </div>
+      <div id="link-box" class="row" hidden>
+        <input id="link-url" type="url" placeholder="https://">
+        <button type="button" id="link-add">Add link</button>
+      </div>
+      <div id="editor" contenteditable="true"></div>
+      <ul id="compose-files"></ul>
+      <p id="compose-error" class="error"></p>
+      <div class="actions">
+        <button type="button" id="compose-cancel">Discard</button>
+        <span class="grow"></span>
+        <button type="button" id="schedule-btn" title="Send later">⏰ Schedule…</button>
+        <button type="submit" class="primary" id="send-btn">Send</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Settings -->
+  <dialog id="settings-dlg">
+    <div class="settings">
+      <nav class="tabs">
+        <h2>Settings</h2>
+        <button type="button" data-tab="general" class="active">General</button>
+        <button type="button" data-tab="accounts">Accounts</button>
+        <button type="button" data-tab="folders">Folders</button>
+        <button type="button" data-tab="about">About</button>
+      </nav>
+      <div class="tab-body">
+        <section data-panel="general">
+          <h3>Layout</h3>
+          <label>Reading pane
+            <select data-view="pane"><option value="right">Right (3 columns)</option><option value="bottom">Bottom</option><option value="off">Off (2 columns)</option></select>
+          </label>
+          <label>Navigation
+            <select data-view="nav"><option value="full">Full</option><option value="icons">Icons only</option></select>
+          </label>
+          <label>Colours
+            <select data-view="tint"><option value="color">Coloured columns</option><option value="plain">Plain</option></select>
+          </label>
+          <h3>Reading</h3>
+          <label>Mark messages as read
+            <select data-pref="markRead"><option value="open">When I open them</option><option value="never">Only when I choose</option></select>
+          </label>
+          <label>Pictures from the internet
+            <select data-pref="images"><option value="ask">Ask, and remember the senders I allow</option><option value="always">Always show</option></select>
+          </label>
+          <p class="note">Pictures always show for phonemail.net, shankars.org, jaiaditya.org, knkoa.org and toggleminds.com.
+            Senders you allowed:</p>
+          <ul id="trusted-list" class="rows"></ul>
+          <label>Ask before deleting
+            <select data-pref="confirmDelete"><option value="no">No</option><option value="yes">Yes</option></select>
+          </label>
+          <h3>New mail</h3>
+          <label>Check for new mail every
+            <select data-pref="interval"><option value="1">1 minute</option><option value="2">2 minutes</option><option value="5">5 minutes</option><option value="10">10 minutes</option><option value="30">30 minutes</option></select>
+          </label>
+        </section>
+        <section data-panel="accounts" hidden>
+          <ul id="settings-accounts" class="rows"></ul>
+          <button type="button" id="settings-add-account" class="primary">+ Add account</button>
+        </section>
+        <section data-panel="folders" hidden>
+          <label>Account <select id="folders-account"></select></label>
+          <ul id="settings-folders" class="rows"></ul>
+          <div class="row new-folder">
+            <input id="new-folder-name" placeholder="New folder name">
+            <button type="button" id="new-folder-btn" class="primary">Create folder</button>
+          </div>
+          <p class="note">Inbox, Drafts, Sent, Archive, Spam and Trash are standard folders and can't be renamed or deleted here.
+            Drag a message onto any folder in the sidebar to move it.</p>
+        </section>
+        <section data-panel="about" hidden>
+          <div class="about">
+            <img src="logo.svg" alt="" width="64" height="64">
+            <div>
+              <h3>ToggleMail <span class="muted">0.1.2</span></h3>
+              <p>Email for any IMAP, POP3 or SMTP account. A free family project by Toggle Minds.</p>
+              <p><a href="https://toggleminds.com/" data-external>toggleminds.com</a></p>
+            </div>
+          </div>
+        </section>
+        <p id="settings-error" class="error"></p>
+        <div class="actions"><span class="grow"></span><button type="button" id="settings-close" class="primary">Done</button></div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Change password -->
+  <dialog id="password-dlg">
+    <form id="password-form" method="dialog">
+      <h2>Change password</h2>
+      <p class="note" id="pw-account"></p>
+      <div id="pw-in-app">
+        <label>Current password <input name="current" type="password" autocomplete="current-password"></label>
+        <label>New password (at least 10 characters) <input name="new1" type="password" autocomplete="new-password"></label>
+        <label>New password again <input name="new2" type="password" autocomplete="new-password"></label>
+      </div>
+      <div id="pw-external">
+        <p id="pw-external-text"></p>
+        <button type="button" id="pw-open-page">Open the password page</button>
+        <label>Then enter the new password here so ToggleMail keeps working
+          <input name="saved" type="password" autocomplete="new-password"></label>
+      </div>
+      <p id="password-error" class="error"></p>
+      <div class="actions">
+        <span class="grow"></span>
+        <button type="button" id="password-cancel">Cancel</button>
+        <button type="submit" class="primary" id="password-save">Change password</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Folder name (new / rename) -->
+  <dialog id="folder-dlg">
+    <form id="folder-form" method="dialog">
+      <h2 id="folder-title">New folder</h2>
+      <label>Folder name <input name="name" required></label>
+      <p id="folder-error" class="error"></p>
+      <div class="actions">
+        <span class="grow"></span>
+        <button type="button" id="folder-cancel">Cancel</button>
+        <button type="submit" class="primary">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="ctx-menu" class="menu ctx" hidden></div>
+  <div id="time-menu" class="menu ctx time" hidden>
+    <div class="menu-title" id="time-title">When?</div>
+    <div id="time-presets"></div>
+    <div class="menu-title">Pick a date and time</div>
+    <input id="time-pick" type="datetime-local">
+    <button type="button" id="time-set" class="primary">Set</button>
+  </div>
+  <div id="toast" hidden></div>
+  <script src="demo.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

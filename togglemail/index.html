@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ToggleMail · Toggle Minds</title>
+<meta name="description" content="ToggleMail: one free, open-source email app for all your accounts (Gmail, Outlook, iCloud, Yahoo, Zoho, Proton, your own domain) on Windows, Mac and Linux. A family project by Toggle Minds.">
+<link rel="icon" href="/togglemail-logo.svg" type="image/svg+xml">
+<style>
+  :root {
+    --bg: #f6f7f9; --card: #ffffff; --ink: #151821; --muted: #5a6172; --line: #e2e5eb;
+    --accent: #0f7b6c; --mint: #4fd1b8; color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0f1116; --card: #171a22; --ink: #e8eaf0; --muted: #9aa1b2; --line: #272b36;
+      --accent: #4fd1b8; color-scheme: dark; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif; }
+  .wrap { max-width: 880px; margin: 0 auto; padding-inline: 20px; }
+  header { padding-block: 22px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 750; font-size: 20px; color: var(--ink); text-decoration: none; }
+  .mono { width: 34px; height: 34px; border-radius: 9px; background: var(--accent); color: var(--bg); display: grid; place-items: center; font-weight: 800; font-size: 15px; }
+  nav a { color: var(--muted); text-decoration: none; margin-left: 16px; font-size: 15px; }
+  nav a:hover { color: var(--ink); }
+  .hero { padding-block: 30px 18px; display: grid; grid-template-columns: 96px 1fr; gap: 22px; align-items: center; }
+  .hero img { width: 96px; height: 96px; }
+  .hero h1 { font-size: clamp(32px, 6vw, 48px); line-height: 1.1; letter-spacing: -0.03em; margin: 0 0 8px; }
+  .hero p { color: var(--muted); margin: 0; font-size: 19px; max-width: 58ch; }
+  section { padding-block: 22px; }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin: 0 0 14px; font-weight: 700; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; }
+  .box { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 18px; }
+  .box h3 { margin: 0 0 6px; font-size: 19px; }
+  .box p { margin: 0 0 10px; color: var(--muted); font-size: 15px; }
+  .btn { display: inline-block; background: var(--accent); color: #fff; text-decoration: none; font-weight: 650;
+    border-radius: 10px; padding: 8px 14px; margin: 2px 6px 4px 0; font-size: 15px; }
+  @media (prefers-color-scheme: dark) { .btn { color: #08201c; } }
+  .btn.alt { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+  code { background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 2px 6px; font-size: 14px; }
+  ul.features { margin: 0; padding-left: 20px; color: var(--muted); columns: 2; column-gap: 32px; }
+  ul.features li { margin-bottom: 6px; break-inside: avoid; }
+  .note { color: var(--muted); font-size: 14px; }
+  .box code { overflow-wrap: anywhere; }
+  .tour { width: 100%; border-radius: 14px; border: 1px solid var(--line); background: #000; display: block; }
+  .shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; margin: 12px 0; }
+  .shots img { width: 100%; border-radius: 10px; border: 1px solid var(--line); display: block; }
+  footer { padding-block: 34px 44px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); margin-top: 20px;
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; }
+  footer a { color: var(--muted); }
+  @media (max-width: 640px) { .hero { grid-template-columns: 64px 1fr; } .hero img { width: 64px; height: 64px; } ul.features { columns: 1; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="brand" href="/"><span class="mono" aria-hidden="true">TM</span><span>Toggle Minds</span></a>
+    <nav><a href="#download">Download</a><a href="#source">Source code</a><a href="contact/">Contact</a></nav>
+  </header>
+
+  <div class="hero">
+    <img src="/togglemail-logo.svg" alt="">
+    <div>
+      <h1>ToggleMail</h1>
+      <p>One email app for all your accounts. Free, no ads, open source &mdash; a family project by Toggle Minds.</p>
+    </div>
+  </div>
+
+  <section>
+    <h2>See it</h2>
+    <video class="tour" src="media/ToggleMail-tour-1920x1080.mp4" poster="media/01-inbox-1280x800-light.png"
+      controls muted playsinline preload="none"></video>
+    <div class="shots">
+      <a href="media/01-inbox-1280x800-light.png"><img src="media/01-inbox-1280x800-light.png" alt="Inbox with an email open" loading="lazy"></a>
+      <a href="media/03-compose-1280x800-light.png"><img src="media/03-compose-1280x800-light.png" alt="Writing an email" loading="lazy"></a>
+      <a href="media/04-scheduled-1280x800-light.png"><img src="media/04-scheduled-1280x800-light.png" alt="Scheduled email" loading="lazy"></a>
+      <a href="media/01-inbox-1280x800-dark.png"><img src="media/01-inbox-1280x800-dark.png" alt="Dark mode" loading="lazy"></a>
+    </div>
+    <p><a class="btn" href="demo/">Try the demo in your browser</a>
+      <span class="note">Made-up mail, nothing to install.</span></p>
+  </section>
+
+  <section>
+    <h2>What it does</h2>
+    <ul class="features">
+      <li>PhoneMail (just your number and password), Gmail, Outlook, iCloud, Yahoo, Zoho, Proton, mailbox.org, Posteo and more &mdash; or any IMAP / POP3 / SMTP account</li>
+      <li>Accounts grouped by service, each with its own folders and unread counts</li>
+      <li>Inbox, Starred, Snoozed, Drafts, Scheduled, Sent, Archive, Spam, Trash and your own folders</li>
+      <li>Schedule an email for later; snooze one until you need it</li>
+      <li>Safe HTML reading: no scripts, pictures only from senders you allow</li>
+      <li>HTML writing with attachments, links and signatures</li>
+      <li>Reading pane on the right, at the bottom, or off; navigation as icons</li>
+      <li>Passwords kept in your computer's keychain, never on our servers</li>
+    </ul>
+  </section>
+
+  <section id="download">
+    <h2>Download &mdash; version 0.1.2</h2>
+    <div class="grid">
+      <div class="box">
+        <h3>Windows 10 / 11</h3>
+        <p>Installer, about 3 MB.</p>
+        <a class="btn" href="https://github.com/ShankarOnline/togglemail/releases/download/v0.1.2/ToggleMail_0.1.2_x64-setup.exe">Download for Windows</a>
+        <a class="btn alt" href="https://github.com/ShankarOnline/togglemail/releases/download/v0.1.2/ToggleMail_0.1.2_x64_en-US.msi">.msi</a>
+        <p class="note">Not yet signed: if Windows warns, choose <em>More info &rarr; Run anyway</em>.</p>
+      </div>
+      <div class="box">
+        <h3>Ubuntu, Pop!_OS &amp; Snap</h3>
+        <p>From the Snap Store, for PCs and 64-bit Raspberry Pi:</p>
+        <p><code>sudo snap install togglemail</code></p>
+        <a class="btn" href="https://snapcraft.io/togglemail">Snap Store page</a>
+      </div>
+      <div class="box">
+        <h3>Other Linux</h3>
+        <p>Debian/Ubuntu, Fedora/openSUSE, or any distribution.</p>
+        <a class="btn" href="https://github.com/ShankarOnline/togglemail/releases/download/v0.1.2/ToggleMail_0.1.2_amd64.deb">.deb</a>
+        <a class="btn" href="https://github.com/ShankarOnline/togglemail/releases/download/v0.1.2/ToggleMail-0.1.2-1.x86_64.rpm">.rpm</a>
+        <a class="btn alt" href="https://github.com/ShankarOnline/togglemail/releases/download/v0.1.2/ToggleMail_0.1.2_amd64.AppImage">AppImage</a>
+      </div>
+      <div class="box">
+        <h3>Flatpak</h3>
+        <p>Any Linux with Flatpak (x86_64). Download the file, then:</p>
+        <p><code>flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo</code></p>
+        <p><code>flatpak install --user ToggleMail_0.1.2_x86_64.flatpak</code></p>
+        <a class="btn" href="https://github.com/ShankarOnline/togglemail/releases/download/v0.1.2/ToggleMail_0.1.2_x86_64.flatpak">.flatpak</a>
+        <p class="note">Coming to Flathub soon: we will be submitting ToggleMail there shortly. Until then, install this file; to update, install the next version&rsquo;s file the same way.</p>
+      </div>
+      <div class="box">
+        <h3>Raspberry Pi &amp; ARM64 Linux</h3>
+        <p>Raspberry Pi 4 or 5 with 64-bit Raspberry Pi OS, and other ARM64 Linux.</p>
+        <a class="btn" href="https://github.com/ShankarOnline/togglemail/releases/download/v0.1.2/ToggleMail_0.1.2_arm64.deb">.deb</a>
+        <a class="btn" href="https://github.com/ShankarOnline/togglemail/releases/download/v0.1.2/ToggleMail-0.1.2-1.aarch64.rpm">.rpm</a>
+        <a class="btn alt" href="https://github.com/ShankarOnline/togglemail/releases/download/v0.1.2/ToggleMail_0.1.2_aarch64.AppImage">AppImage</a>
+      </div>
+      <div class="box">
+        <h3>FreeBSD</h3>
+        <p>amd64. Needs <code>pkg install webkit2-gtk_41 gtk3</code>.</p>
+        <a class="btn" href="https://github.com/ShankarOnline/togglemail/releases/download/v0.1.2/ToggleMail-freebsd-amd64.tar.gz">.tar.gz</a>
+      </div>
+      <div class="box">
+        <h3>Mac</h3>
+        <p>Apple silicon and Intel.</p>
+        <a class="btn" href="https://github.com/ShankarOnline/togglemail/releases/download/v0.1.2/ToggleMail_0.1.2_universal.dmg">Download for Mac</a>
+        <p class="note">Not yet notarised: the first time, right-click the app and choose <em>Open</em>.</p>
+      </div>
+    </div>
+    <p class="note">All files are also on <a href="https://github.com/ShankarOnline/togglemail/releases/latest">GitHub releases</a>. iPhone, iPad and Apple Watch: <a href="https://apps.apple.com/app/togglemail/id6835174084">ToggleMail on the App Store</a>. Coming soon: the Microsoft Store, the Mac App Store and Google Play.
+      Checksums: <a href="download/SHA256SUMS.txt">SHA256SUMS.txt</a>.</p>
+  </section>
+
+  <section id="source">
+    <h2>Open source</h2>
+    <div class="box">
+      <h3>The code is yours to read, use and improve</h3>
+      <p>ToggleMail is free software under the GNU General Public License, version 3 or later. Report a bug,
+        add settings for your mail provider, translate it, or send an improvement &mdash; contributions are welcome.</p>
+      <a class="btn" href="https://github.com/ShankarOnline/togglemail">ToggleMail on GitHub</a>
+      <a class="btn alt" href="https://github.com/ShankarOnline/togglemail/blob/main/CONTRIBUTING.md">How to contribute</a>
+    </div>
+  </section>
+
+  <footer>
+    <span>&copy; 2026 Toggle Minds &middot; a family hobby, free for everyone</span>
+    <span><a href="contact/">Contact us</a> &middot; <a href="privacy/">Privacy</a> &middot; <a href="/">Toggle Minds</a> &middot; <a href="https://phonemail.net/">PhoneMail.Net</a> &middot; <a href="https://github.com/ShankarOnline/togglemail">GitHub</a></span>
+  </footer>
+</div>
+</body>
+</html>

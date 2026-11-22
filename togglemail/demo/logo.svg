@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#139683"/>
+      <stop offset="1" stop-color="#0a5f54"/>
+    </linearGradient>
+  </defs>
+  <!-- Toggle Minds tile: same teal and corner radius as the TM mark -->
+  <rect width="64" height="64" rx="16" fill="url(#bg)"/>
+  <!-- envelope -->
+  <rect x="10" y="15" width="40" height="29" rx="5" fill="#ffffff"/>
+  <path d="M13 19 L30 31.5 L47 19" fill="none" stroke="#0f7b6c" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- the toggle: mint switch, switched on -->
+  <rect x="29" y="37" width="27" height="15" rx="7.5" fill="#4fd1b8" stroke="#0b6458" stroke-width="2.4"/>
+  <circle cx="48.5" cy="44.5" r="5" fill="#ffffff"/>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72" width="72" height="72" role="img" aria-label="Narada">
+  <rect width="72" height="72" rx="16" fill="#0f7b6c"/>
+  <g fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M36 24 22 48"/><path d="M36 24 50 48"/><path d="M22 48h28"/>
+  </g>
+  <g fill="#ffffff"><circle cx="36" cy="24" r="6"/><circle cx="22" cy="48" r="6"/><circle cx="50" cy="48" r="6"/></g>
+</svg>
