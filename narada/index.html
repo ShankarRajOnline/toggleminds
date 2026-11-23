@@ -31,6 +31,7 @@
   .hero p { color: var(--muted); margin: 0; font-size: 18px; }
   section { padding-block: 22px; }
   h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin: 0 0 14px; font-weight: 700; }
+  .ver { color: var(--muted); font-weight: 400; letter-spacing: 0; text-transform: none; }
   .dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; }
   .os { border: 1px solid var(--line); border-radius: 16px; padding: 18px; background: var(--card); display: flex; flex-direction: column; gap: 9px; min-width: 0; }
   .os h3 { margin: 0; font-size: 18px; }
@@ -40,8 +41,6 @@
   .btn:hover { filter: brightness(1.07); }
   .note { color: var(--muted); font-size: 14px; max-width: 64ch; }
   .note code { background: var(--line); padding: 1px 6px; border-radius: 5px; font-size: .9em; }
-  .status { color: var(--muted); font-size: 14px; }
-  .ver { font-weight: 700; color: var(--ink); }
   .feat { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px 24px; }
   .feat div { min-width: 0; }
   .feat b { display: block; }
@@ -68,9 +67,31 @@
   </div>
 
   <section>
-    <h2>Download <span id="ver" class="status"></span></h2>
-    <div class="dl" id="downloads"><p class="status" id="dlstatus">Loading the latest release from GitHub…</p></div>
-    <p class="note" id="warn" style="margin-top:14px" hidden>These builds aren't code-signed yet, so you'll click past a warning. <b>Windows:</b> More info → Run anyway. <b>macOS:</b> right-click the app → Open, or run <code>xattr -dr com.apple.quarantine /Applications/Narada.app</code>.</p>
+    <h2>Download <span class="ver">· v0.1.1</span></h2>
+    <div class="dl">
+      <div class="os">
+        <h3>Windows</h3>
+        <a class="btn" href="https://github.com/ShankarOnline/navsuite/releases/download/v0.1.1/Narada_0.1.1_x64-setup.exe">Installer (.exe)</a>
+        <a class="btn ghost" href="https://github.com/ShankarOnline/navsuite/releases/download/v0.1.1/Narada_0.1.1_x64_en-US.msi">.msi package</a>
+      </div>
+      <div class="os">
+        <h3>macOS <span class="sub">Intel &amp; Apple&nbsp;Silicon</span></h3>
+        <a class="btn" href="https://github.com/ShankarOnline/navsuite/releases/download/v0.1.1/Narada_0.1.1_universal.dmg">Disk image (.dmg)</a>
+      </div>
+      <div class="os">
+        <h3>Linux <span class="sub">x86-64</span></h3>
+        <a class="btn" href="https://github.com/ShankarOnline/navsuite/releases/download/v0.1.1/Narada_0.1.1_amd64.AppImage">.AppImage</a>
+        <a class="btn ghost" href="https://github.com/ShankarOnline/navsuite/releases/download/v0.1.1/Narada_0.1.1_amd64.deb">.deb</a>
+        <a class="btn ghost" href="https://github.com/ShankarOnline/navsuite/releases/download/v0.1.1/Narada-0.1.1-1.x86_64.rpm">.rpm</a>
+      </div>
+      <div class="os">
+        <h3>Raspberry Pi <span class="sub">64-bit · ARM64</span></h3>
+        <a class="btn" href="https://github.com/ShankarOnline/navsuite/releases/download/v0.1.1/Narada_0.1.1_aarch64.AppImage">.AppImage</a>
+        <a class="btn ghost" href="https://github.com/ShankarOnline/navsuite/releases/download/v0.1.1/Narada_0.1.1_arm64.deb">.deb</a>
+        <a class="btn ghost" href="https://github.com/ShankarOnline/navsuite/releases/download/v0.1.1/Narada-0.1.1-1.aarch64.rpm">.rpm</a>
+      </div>
+    </div>
+    <p class="note" style="margin-top:14px"><b>macOS</b> is signed &amp; notarized by Apple — it just opens. <b>Windows</b> isn't signed yet, so SmartScreen may warn: <b>More info → Run anyway</b>. <b>Linux/Pi:</b> make the AppImage executable (<code>chmod +x</code>) or install the .deb/.rpm. All builds and checksums are on the <a href="https://github.com/ShankarOnline/navsuite/releases/latest" target="_blank" rel="noopener">releases page</a>.</p>
   </section>
 
   <section>
@@ -90,74 +111,6 @@
     <span><a href="https://github.com/ShankarOnline/navsuite" target="_blank" rel="noopener">Source &amp; releases</a> &middot; <a href="/">Toggle&nbsp;Minds</a></span>
   </footer>
 </div>
-
-<script>
-(function () {
-  document.getElementById('yr').textContent = new Date().getFullYear();
-  var REPO = 'ShankarOnline/navsuite';
-  // match a release asset to a platform + a human label
-  function classify(name) {
-    var n = name.toLowerCase();
-    if (/\.exe$/.test(n)) return ['win', 'Installer (.exe)', true];
-    if (/\.msi$/.test(n)) return ['win', '.msi package', false];
-    if (/\.dmg$/.test(n)) return ['mac', 'Disk image (.dmg)', true];
-    if (/(aarch64|arm64)\.appimage$/.test(n)) return ['pi', '.AppImage', true];
-    if (/(aarch64|arm64)\.deb$/.test(n)) return ['pi', '.deb', false];
-    if (/(aarch64|arm64).*\.rpm$/.test(n)) return ['pi', '.rpm', false];
-    if (/\.appimage$/.test(n)) return ['linux', '.AppImage', true];
-    if (/amd64\.deb$|_x64.*\.deb$/.test(n)) return ['linux', '.deb', false];
-    if (/x86_64.*\.rpm$/.test(n)) return ['linux', '.rpm', false];
-    return [null, null, false];
-  }
-  var OSES = [
-    { key: 'win', title: 'Windows', sub: '' },
-    { key: 'mac', title: 'macOS', sub: 'Intel & Apple Silicon' },
-    { key: 'linux', title: 'Linux', sub: 'x86-64' },
-    { key: 'pi', title: 'Raspberry Pi', sub: '64-bit · ARM64' }
-  ];
-  function el(tag, attrs, text) {
-    var e = document.createElement(tag);
-    if (attrs) for (var k in attrs) e.setAttribute(k, attrs[k]);
-    if (text != null) e.textContent = text;
-    return e;
-  }
-  fetch('https://api.github.com/repos/' + REPO + '/releases/latest', { headers: { 'Accept': 'application/vnd.github+json' } })
-    .then(function (r) { if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
-    .then(function (rel) {
-      var buckets = { win: [], mac: [], linux: [], pi: [] };
-      (rel.assets || []).forEach(function (a) {
-        var c = classify(a.name);
-        if (c[0]) buckets[c[0]].push({ url: a.browser_download_url, label: c[1], primary: c[2] });
-      });
-      var host = document.getElementById('downloads');
-      host.innerHTML = '';
-      document.getElementById('ver').textContent = rel.tag_name ? '· ' + rel.tag_name : '';
-      var any = false;
-      OSES.forEach(function (os) {
-        var items = buckets[os.key].sort(function (a, b) { return (b.primary ? 1 : 0) - (a.primary ? 1 : 0); });
-        if (!items.length) return;
-        any = true;
-        var card = el('div', { class: 'os' });
-        var h = el('h3'); h.appendChild(document.createTextNode(os.title + ' '));
-        if (os.sub) h.appendChild(el('span', { class: 'sub' }, os.sub));
-        card.appendChild(h);
-        items.forEach(function (it) {
-          card.appendChild(el('a', { class: 'btn' + (it.primary ? '' : ' ghost'), href: it.url }, it.label));
-        });
-        host.appendChild(card);
-      });
-      document.getElementById('warn').hidden = false;
-      if (!any) throw new Error('no installers in the latest release');
-    })
-    .catch(function (e) {
-      var host = document.getElementById('downloads');
-      host.innerHTML = '';
-      var p = el('p', { class: 'status' });
-      p.appendChild(document.createTextNode('Couldn’t load the release list. '));
-      p.appendChild(el('a', { class: 'btn ghost', href: 'https://github.com/' + REPO + '/releases/latest', target: '_blank', rel: 'noopener', style: 'display:inline-block;margin-top:8px' }, 'Open the releases page'));
-      host.appendChild(p);
-    });
-})();
-</script>
+<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
 </body>
 </html>
